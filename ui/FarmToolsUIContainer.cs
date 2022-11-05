@@ -13,6 +13,13 @@ public class FarmToolsUIContainer : Container
         
     }
 
+    public void OnCanClicked(InputEvent e)
+    {
+        if (e is InputEventMouseButton && e.IsPressed())
+        {
+            GD.Print("lol");
+        }
+    }
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 //  public override void _Process(float delta)
 //  {
