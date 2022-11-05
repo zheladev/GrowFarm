@@ -35,3 +35,5 @@ animation = "dry"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
+
+[connection signal="input_event" from="." to="." method="OnPlotInputEvent"]
