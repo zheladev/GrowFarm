@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Plot.cs" type="Script" id=1]
-[ext_resource path="res://img/plot-wet.png" type="Texture" id=2]
+[ext_resource path="res://plot/Plot.cs" type="Script" id=1]
+[ext_resource path="res://crop/Crop.tscn" type="PackedScene" id=2]
 [ext_resource path="res://img/plot-dry.png" type="Texture" id=3]
-[ext_resource path="res://Crop.tscn" type="PackedScene" id=4]
+[ext_resource path="res://img/plot-wet.png" type="Texture" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -12,7 +12,7 @@ animations = [ {
 "name": "dry",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "wet",
 "speed": 5.0
@@ -31,7 +31,7 @@ __meta__ = {
 frames = SubResource( 1 )
 animation = "dry"
 
-[node name="Crop" parent="." instance=ExtResource( 4 )]
+[node name="Crop" parent="." instance=ExtResource( 2 )]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )

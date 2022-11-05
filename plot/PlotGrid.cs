@@ -14,7 +14,7 @@ public class PlotGrid : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        _InitValues();
+        InitValues();
 
         for (int i = 0; i < plotNumber; i++)
         {
@@ -45,22 +45,17 @@ public class PlotGrid : Node2D
         }
     }
 
-    private void _InitValues()
+    private void InitValues()
     {
-        plotScene = ResourceLoader.Load<PackedScene>("res://Plot.tscn");
+        plotScene = ResourceLoader.Load<PackedScene>("res://plot/Plot.tscn");
         plots = new List<Plot>();
     }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //      
-    //  }
     public void OnPlotTimerTimeout() 
     {
-        foreach(Plot _plot in plots)
+        foreach(Plot plot in plots)
         {
-            _plot.Step();
+            plot.Step();
         }
     }
 }
