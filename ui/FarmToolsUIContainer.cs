@@ -13,7 +13,7 @@ public class FarmToolsUIContainer : Container
 
     private void _ConnectEvents()
     {
-        es.Connect(nameof(EventSystem.E_NAMES.WaterCanToggled), this, "Print");
+        es.Connect(nameof(EventSystem.E_NAMES.WaterCanToggled), this, nameof(ToggleWatercan));
     }
 
     private void _InitValues()
@@ -33,5 +33,6 @@ public class FarmToolsUIContainer : Container
     public void ToggleWatercan()
     {
         g.IsWaterCanSelected = !g.IsWaterCanSelected;
+        GD.Print(g.IsWaterCanSelected);
     }
 }
