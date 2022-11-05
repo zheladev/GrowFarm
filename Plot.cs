@@ -22,5 +22,7 @@ public class Plot : Node2D
     {
         //water lost per second
         float lostWaterValue = drynessFactor/1000 * delta;
+        float newWaterLevel = waterLevel - lostWaterValue;
+        waterLevel = newWaterLevel >= 0.0f ? newWaterLevel : 0.0f;
     }
 }
