@@ -7,5 +7,8 @@
 script = ExtResource( 2 )
 
 [node name="PlotGrid" parent="." instance=ExtResource( 1 )]
+plotNumber = 9
 
-[node name="StartTimer" type="Timer" parent="."]
+[node name="PlotTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="PlotTimer" to="PlotGrid" method="OnPlotTimerTimeout"]

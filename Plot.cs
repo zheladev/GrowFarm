@@ -17,12 +17,18 @@ public class Plot : Node2D
         drynessFactor = 0.3f;
     }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta)
+    public void Step()
     {
-        //water lost per second
-        float lostWaterValue = drynessFactor/1000 * delta;
-        float newWaterLevel = waterLevel - lostWaterValue;
-        waterLevel = newWaterLevel >= 0.0f ? newWaterLevel : 0.0f;
+        //grow crop if able and reduce water based on crop consumption
+        
     }
+
+    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    // public override void _Process(float delta)
+    // {
+    //     //water lost per second
+    //     float lostWaterValue = drynessFactor/1000 * delta;
+    //     float newWaterLevel = waterLevel - lostWaterValue;
+    //     waterLevel = newWaterLevel >= 0.0f ? newWaterLevel : 0.0f;
+    // }
 }
