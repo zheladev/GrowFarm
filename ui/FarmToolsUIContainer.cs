@@ -1,28 +1,37 @@
-using Godot;
 using System;
+using Godot;
 
 public class FarmToolsUIContainer : Container
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
-
-    // Called when the node enters the scene tree for the first time.
+    GlobalVars g;
+    EventSystem es;
     public override void _Ready()
     {
-        
+        _InitValues();
+        _ConnectEvents();
+    }
+
+    private void _ConnectEvents()
+    {
+        es.Connect(nameof(EventSystem.E_NAMES.WaterCanToggled), this, "Print");
+    }
+
+    private void _InitValues()
+    {
+        g = GetNode<GlobalVars>("/root/GlobalVars");
+        es = GetNode<EventSystem>("/root/EventSystem");
     }
 
     public void OnCanClicked(InputEvent e)
     {
         if (e is InputEventMouseButton && e.IsPressed())
         {
-            GD.Print("lol");
+            es.EmitEvent(EventSystem.E_NAMES.WaterCanToggled);
         }
     }
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+
+    public void ToggleWatercan()
+    {
+        g.IsWaterCanSelected = !g.IsWaterCanSelected;
+    }
 }
