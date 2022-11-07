@@ -7,6 +7,7 @@ public class GlobalVars : Node2D
     // -1 nothing selected, 0 watering can, 2 hoe, etc
     public Boolean IsWaterCanSelected;
     public SeedRepository SeedRepository;
+
     public override void _Ready()
     {
         _InitValues();

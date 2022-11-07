@@ -19,16 +19,19 @@ public class Seed
     
     public int Stages;
     public S_TYPES SeedType;
-    public int WaterConsumption;
+    public float WaterConsumption;
+    public float GrowthRequired;
     public float SellValue;
 
 
 
-    public Seed(S_TYPES seedType, float sellValue, int stages)
+    public Seed(S_TYPES seedType, float sellValue, float wConsumption, float gRequired, int stages)
     {
         Stages = stages;
         SeedType = seedType;
         SellValue = sellValue;
+        WaterConsumption = wConsumption;
+        GrowthRequired = gRequired;
     }
 
     private string _GetSpritePath()
@@ -46,5 +49,4 @@ public class Seed
 
         return _paths;
     }
-
 }

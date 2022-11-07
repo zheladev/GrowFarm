@@ -10,7 +10,7 @@ public class SeedRepository
     {
         SeedList = new Dictionary<int, Seed>()
         {
-            {(int) Seed.S_TYPES.GREEN, new Seed(Seed.S_TYPES.GREEN, 10.0f, 4)}
+            {(int) Seed.S_TYPES.GREEN, new Seed(Seed.S_TYPES.GREEN, 10.0f, 0.5f, 100, 4)}
         };
     }
 

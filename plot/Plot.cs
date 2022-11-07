@@ -3,20 +3,24 @@ using System;
 
 public class Plot : Node2D
 {
+    GlobalVars g;
+    EventSystem es;
+
     enum PlotStates
     {
         dry,
         wet
     }
-
-    GlobalVars g;
-    EventSystem es;
-    AnimatedSprite sprite;
+    AnimatedSprite Sprite;
 
     [Export]
-    public PackedScene crop;
-    private float waterLevel;
-    private float drynessFactor;
+    public PackedScene CropScene;
+    private float WaterLevel;
+    private float DrynessFactor;
+    public Seed Seed;
+    public Crop Crop;
+    public bool IsCropPlanted;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -27,17 +31,18 @@ public class Plot : Node2D
     {
         g = GetNode<GlobalVars>("/root/GlobalVars");
         es = GetNode<EventSystem>("/root/EventSystem");
-        sprite = GetNode<AnimatedSprite>("AnimatedSprite");
-        waterLevel = 0.0f;
-        drynessFactor = 0.3f;
+        Sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        WaterLevel = 0.0f;
+        DrynessFactor = 0.3f;
+        IsCropPlanted = false;
     }
 
     private void _UpdateSprite()
     {
-        string currAnim = waterLevel == 0 ? nameof(PlotStates.dry) : nameof(PlotStates.wet);
-        if (currAnim != sprite.Animation)
+        string currAnim = WaterLevel == 0 ? nameof(PlotStates.dry) : nameof(PlotStates.wet);
+        if (currAnim != Sprite.Animation)
         {
-            sprite.Animation = currAnim;
+            Sprite.Animation = currAnim;
         }
     }
 
@@ -53,13 +58,35 @@ public class Plot : Node2D
     {
         if (g.IsWaterCanSelected) //switch with states to plant, till or water the plot.
         {
-            waterLevel += 5;
+            WaterLevel += 5;
         }
+        PlantSeed(0); //TODO: remove, debug
         _UpdateSprite();
-        GD.Print(g.SeedRepository.GetSeed(0).SeedType);
-        GD.Print(g.SeedRepository.GetSeed(0).SellValue);
-        GD.Print(g.SeedRepository.GetSeed(0).Stages);
-        GD.Print(g.SeedRepository.GetSeed(0).SpritePaths());
+    }
+
+    public void PlantSeed(int seedIdx)
+    {
+        //TODO: ERROR PRONE. GetSeed may try to access an index out of bonds.
+        var s = g.SeedRepository.GetSeed(seedIdx);
+        if (IsCropPlanted) return;
+        if (s == null) return;
+        
+        Seed = s;
+        Crop c = CropScene.Instance<Crop>();
+        c.Init(s.SpritePaths());
+        Crop = c;
+        AddChild(Crop);
+        IsCropPlanted = true;
+    }
+
+    public void CollectCrop()
+    {
+        if (Seed == null) return;
+
+        float moneyCollected = Seed.SellValue;
+
+        Seed = null;
+        Crop.QueueFree();
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -67,8 +94,8 @@ public class Plot : Node2D
     {
         //grow crop if able and reduce water based on crop consumption
         float lostWaterValue = 1; // per second
-        float newWaterLevel = waterLevel - lostWaterValue * delta;
-        waterLevel = newWaterLevel >= 0.0f ? newWaterLevel : 0.0f;
+        float newWaterLevel = WaterLevel - lostWaterValue * delta;
+        WaterLevel = newWaterLevel >= 0.0f ? newWaterLevel : 0.0f;
 
         _UpdateSprite();
     }
