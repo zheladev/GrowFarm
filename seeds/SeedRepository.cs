@@ -3,16 +3,21 @@ using System.Collections.Generic;
 public class SeedRepository
 {
 
-    public List<Seed> SeedList;
+    public Dictionary<int, Seed> SeedList;
 
 
     public SeedRepository()
     {
-        SeedList = new List<Seed>()
+        SeedList = new Dictionary<int, Seed>()
         {
-            new Seed(Seed.S_TYPES.GREEN, 10.0f, 4),
+            {(int) Seed.S_TYPES.GREEN, new Seed(Seed.S_TYPES.GREEN, 10.0f, 4)}
         };
     }
 
-    
+    #nullable enable
+    public Seed? GetSeed(int idx)
+    {
+        return SeedList[idx];
+    }
+    #nullable disable
 }

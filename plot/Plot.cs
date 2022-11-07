@@ -56,6 +56,10 @@ public class Plot : Node2D
             waterLevel += 5;
         }
         _UpdateSprite();
+        GD.Print(g.SeedRepository.GetSeed(0).SeedType);
+        GD.Print(g.SeedRepository.GetSeed(0).SellValue);
+        GD.Print(g.SeedRepository.GetSeed(0).Stages);
+        GD.Print(g.SeedRepository.GetSeed(0).SpritePaths());
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.

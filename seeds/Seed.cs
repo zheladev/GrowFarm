@@ -12,9 +12,9 @@ public class Seed
     static string PATH_PREFIX = "res://img/seeds/";
     public enum S_TYPES 
     {
-        GREEN,
-        TYPE_1,
-        TYPE_2,
+        GREEN = 0,
+        TYPE_1 = 1,
+        TYPE_2 = 2,
     }
     
     public int Stages;
@@ -41,7 +41,7 @@ public class Seed
         string[] _paths = new string[Stages];
         for(int i = 0; i < Stages;i++)
         {
-            _paths[i] = $"{_GetSpritePath()}/stage-${i}.png";
+            _paths[i] = $"{_GetSpritePath()}/stage-{i}.png";
         }
 
         return _paths;
