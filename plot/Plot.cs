@@ -12,7 +12,9 @@ public class Plot : Node2D
     GlobalVars g;
     EventSystem es;
     AnimatedSprite sprite;
-    public Crop crop;
+
+    [Export]
+    public PackedScene crop;
     private float waterLevel;
     private float drynessFactor;
     // Called when the node enters the scene tree for the first time.
@@ -26,24 +28,17 @@ public class Plot : Node2D
         g = GetNode<GlobalVars>("/root/GlobalVars");
         es = GetNode<EventSystem>("/root/EventSystem");
         sprite = GetNode<AnimatedSprite>("AnimatedSprite");
-        crop = GetNode<Crop>("Crop");
         waterLevel = 0.0f;
         drynessFactor = 0.3f;
     }
 
-    public void Step()
+    private void _UpdateSprite()
     {
-        //grow crop if able and reduce water based on crop consumption
-        float lostWaterValue = 1;
-        float newWaterLevel = waterLevel - lostWaterValue;
-        waterLevel = newWaterLevel >= 0.0f ? newWaterLevel : 0.0f;
-
-        UpdateSprite();
-    }
-
-    public void UpdateSprite()
-    {
-        sprite.Animation = waterLevel == 0 ? nameof(PlotStates.dry) : nameof(PlotStates.wet);
+        string currAnim = waterLevel == 0 ? nameof(PlotStates.dry) : nameof(PlotStates.wet);
+        if (currAnim != sprite.Animation)
+        {
+            sprite.Animation = currAnim;
+        }
     }
 
     public void OnPlotInputEvent(Node viewport, InputEvent e, int shape_idx)
@@ -58,13 +53,19 @@ public class Plot : Node2D
     {
         if (g.IsWaterCanSelected) //switch with states to plant, till or water the plot.
         {
-            waterLevel += 10;
+            waterLevel += 5;
         }
-        UpdateSprite();
+        _UpdateSprite();
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    // public override void _Process(float delta)
-    // {
-    // }
+    public override void _Process(float delta)
+    {
+        //grow crop if able and reduce water based on crop consumption
+        float lostWaterValue = 1; // per second
+        float newWaterLevel = waterLevel - lostWaterValue * delta;
+        waterLevel = newWaterLevel >= 0.0f ? newWaterLevel : 0.0f;
+
+        _UpdateSprite();
+    }
 }

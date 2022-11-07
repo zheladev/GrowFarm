@@ -53,9 +53,9 @@ public class PlotGrid : Node2D
 
     public void OnPlotTimerTimeout() 
     {
-        foreach(Plot plot in plots)
-        {
-            plot.Step();
-        }
+        // foreach(Plot plot in plots)
+        // {
+        //     plot.Step();
+        // }
     }
 }
